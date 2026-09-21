@@ -1,0 +1,34 @@
+#toasts_container {
+    position: absolute;
+    right: 1.5rem;
+    top: 1.5rem;
+    height: calc(100vh - 3rem);
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    overflow: hidden;
+}
+#toasts_container .notification {
+    background-color: rgb(125 125 125);
+    border-radius: 10px;
+    padding: 10px 15px;
+    font-weight: 600;
+    max-width: 20rem;
+    animation: notification_show 1s;
+    transition: 1s;
+    text-align: center;
+}
+#toasts_container .notification .title {
+    font-size: 14px;
+}
+
+@keyframes notification_show {
+    from {
+        opacity: 0;
+    }
+}
+@keyframes notification_hide {
+    to {
+        opacity: 0;
+    }
+}

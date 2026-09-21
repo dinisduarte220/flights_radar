@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <link rel='stylesheet' href='style.css'>
+    <link rel='shortcut icon' href='IMG/icon.ico' type='image/x-icon'>
+    <script src='https://unpkg.com/boxicons@2.1.4/dist/boxicons.js'></script>
+    <script src='https://kit.fontawesome.com/207c253573.js' crossorigin='anonymous'></script>
+    <script src="https://unpkg.com/maplibre-gl@^6.8.0/dist/maplibre-gl.js"></script>
+    <link href="https://unpkg.com/maplibre-gl@^6.8.0/dist/maplibre-gl.css" rel="stylesheet" />
+     <link rel="stylesheet" href="./shared/snackbar.css">
+    <title>Flight Radar</title>
+</head>
+<body>
+    <div id="content">
+        <h3>Welcome to Flights Radar!</h3>
+        <input type="text" id="airport_selector" placeholder="Airport ICAO">
+        <i id="userLocation" onclick="userLocation()" class="fa-solid fa-location-crosshairs"></i>
+    </div>
+    <!-- Notifications -->
+    <div id="toasts_container">
+    </div>
+    <script src='script.js'></script>
+    <script src='./shared/snackbar.js'></script>
+    <script src='./shared/apis.js'></script>
+</body>
+</html>
