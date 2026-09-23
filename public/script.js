@@ -6,9 +6,26 @@ document.addEventListener("keydown", e => {
 async function checkAirport(icaoSearch) {
     try {
         const data = await getAirportData(icaoSearch)
-        console.log(data)
+        window.location.href = `/view/airport/${data.icao}`
     } catch (error) {
         console.error(error.message)
         showNotification("Ocorreu um erro a obter dados do aeroporto selecionado")
     }
+}
+
+// Obtain user location
+function userLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, error)
+    } else {
+        showNotification("Geolocation não é suportado neste navegador")
+    }
+}
+
+function success(position) {
+    window.location.href = `/view/location/${position.coords.longitude},${position.coords.latitude}`
+}
+
+function error() {
+    showNotification("Não foi possível obter a sua localização")
 }

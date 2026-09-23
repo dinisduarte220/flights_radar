@@ -1,0 +1,44 @@
+#map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    cursor: default;
+}
+
+.airplane_marker {
+    position: relative;
+    width: 1px;
+    height: 1px;
+}
+.airplane_pos {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 5px;
+    height: 5px;
+    background-color: whitesmoke;
+    border-radius: 50px
+}
+.airplane_line {
+    position: absolute;
+    top: -17.5px;
+    left: 0;
+    width: 2px;
+    height: 35px;
+    background-color: whitesmoke;
+    transform-origin: bottom center;
+}
+.airplane_info {
+  position: absolute;
+  left: 25px;
+  top: 0px;
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  color: white;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  white-space: nowrap;
+}
