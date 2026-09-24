@@ -41,7 +41,17 @@ async function initializeView() {
         style: "https://api.jawg.io/styles/jawg-dark.json?access-token=zyLDUYMkhQ8nsbh3NFInHcUxLoxFUPjIVXadZWrhSSKlG9LRXFceIrP4vMErY9dy",
         center: [-9.0, 38.7],
         zoom: 10,
-      });
+      })
+
+      map.addControl(new maplibregl.NavigationControl());
+      map.addControl(
+      new maplibregl.GeolocateControl({
+            positionOptions: {
+                enableHighAccuracy: true
+            },
+            trackUserLocation: true
+        })
+      )
     }
   } else {
     // Location mode coords: XX.XX,XX.XX
@@ -65,7 +75,7 @@ async function initializeView() {
       .addTo(map);
   }
 
-  const updateTimer = 7500
+  const updateTimer = 5000
   if (lon != null && lat != null) {
     getFlights()
     setInterval(async () => {
@@ -99,8 +109,8 @@ async function getFlights() {
         flight.lat == null ||
         flight.lon == null ||
         flight.true_heading == null ||
-        flight.alt_baro < 100 ||
-        flight.alt_baro == "ground" ||
+        flight.alt_baro < 150 ||
+        // flight.alt_baro == "ground" ||
         flight.seen > 180
       ) return
       flights.push({
@@ -112,7 +122,7 @@ async function getFlights() {
         speed: flight.ias,    // Speed
         ground_speed: flight.gs,    // Ground Speed
         altitude: flight.alt_baro,    // Altitude
-        ap_altitude: flight.nav_altitude_mcp,    // Assigned Altitude
+        ap_altitude: Math.round(flight.nav_altitude_mcp / 100) * 100,    // Assigned Altitude
         rate: flight.baro_rate,    // Vertical Rate
         heading: flight.true_heading,    // Heading
         track: flight.track,    // Track
@@ -152,12 +162,27 @@ function updateFlights() {
       const marker = existingMarkers.get(element.icao)
       marker.setLngLat([element.longitude, element.latitude])
 
+      let alt_icon    // Altitude ICON: Climbing or Descending
+      if (element.altitude > element.ap_altitude && element.rate < 0) {
+        alt_icon = "⇘"
+      } else if (element.altitude < element.ap_altitude && element.rate > 0) {
+        alt_icon = "⇗"
+      } else {
+        alt_icon = " "
+      }
+
       const markerElement = marker.getElement()
+      
+      
+      if (element.altitude == "ground") {
+        markerElement.querySelector('.airplane_line').style.display = "none"
+      } else {
+        markerElement.querySelector('.airplane_line').style.display = "block"
+      }
       markerElement.querySelector('.airplane_line').style.transform = `translate(-50%, -50%) rotate(${element.track}deg)`
       markerElement.querySelector('.airplane_info').innerHTML = `
         <div>${element.callsign}</div>
-        <div>${element.model}</div>
-        <div>${element.altitude} -> ${element.ap_altitude}</div>
+        <div>${element.model} ${alt_icon} ${element.ap_altitude}</div>
       `
     } else {
       const airplaneMarker = document.createElement('div')
@@ -168,15 +193,25 @@ function updateFlights() {
       })
       const position = document.createElement('div')
       position.className = "airplane_pos"
+
       const line = document.createElement('div')
       line.className = "airplane_line"
       line.style.transform = `translate(-50%, -50%) rotate(${element.track}deg)`
+      if (element.altitude == "ground") line.style.display = "none"
+
+      let alt_icon    // Altitude ICON: Climbing or Descending
+      if (element.altitude > element.ap_altitude && element.rate < 0) {
+        alt_icon = "⇘"
+      } else if (element.altitude < element.ap_altitude && element.rate > 0) {
+        alt_icon = "⇗"
+      } else {
+        alt_icon = " "
+      }
       const info = document.createElement('div')
       info.className = "airplane_info"
       info.innerHTML = `
         <div>${element.callsign}</div>
-        <div>${element.model}</div>
-        <div>${element.altitude} -> ${element.ap_altitude}</div>
+        <div>${element.model} ${alt_icon} ${element.ap_altitude}</div>
       `
 
       airplaneMarker.appendChild(position)
