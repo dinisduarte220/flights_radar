@@ -11,7 +11,6 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    cursor: default;
 }
 
 .airplane_marker {
@@ -60,8 +59,7 @@
     gap: 25px;
     padding: 15px 20px;
     border-radius: 100px;
-    background-color: rgb(175 175 175);
-    box-shadow: 1px 1px 15px gray;
+    background-color: #71787A;
     color: rgb(25 25 25);
     font-size: 17px;
 }
@@ -92,14 +90,174 @@
     font-size: 14px;
     width: max-content;
 }
-
 @keyframes label_anim {
     from {
         opacity: 0;
     }
 }
 
+/* Settings Bar */
+#settingsBar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    top: calc((5vh / 2) - (1rem));
+    left: calc((5vh / 2) - (1rem));
+    width: 15vw;
+    max-height: 95vh;
+    overflow: scroll;
+    padding: .75rem 1rem 1.25rem 1rem;
+    background-color: #494D4F;
+    color: #e4e6e7;
+    border-radius: 25px;
+}
+#settingsBar .settingsOption {
+    display: flex;
+    flex-direction: column;
+}
+#settingsBar .settingsOption.checkbox {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+#settingsBar .hl {
+    width: 100%;
+    height: 2px;
+    background-color: #292C2C;
+    border-radius: 50px;
+}
+#settingsBar label {
+    margin-bottom: 5px;
+}
+#settingsBar button {
+    margin-top: 10px;
+    width: calc(100% - 10px);
+    background-color: #6D8196;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 15px;
+    color: #181D21;
+    transition: .3s;
+    cursor: pointer;
+}
+#settingsBar button:hover {
+    background-color: #546475;
+}
+
+/* Custom CheckBoxes */
+input[type='checkbox'] {
+    appearance: none;
+    font: inherit;
+    width: 1.15rem;
+    height: 1.15rem;
+    border: 2px solid #e4e6e7;
+    border-radius: 50px;
+    transform: translateY(2px);
+    cursor: pointer;
+    display: grid;
+    place-content: center;
+}
+input[type='checkbox']::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  background-color: #e4e6e7;
+  border-radius: 50px;
+  transform: scale(0);
+  transition: 100ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--form-control-color);
+}
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+input[type='checkbox']:disabled {
+    opacity: .5;
+}
+
+/* Custom Range Input */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+  outline: none;
+}
+input[type="range"]:focus {
+  outline: none;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  background-color: #607386;
+  border-radius: 1rem;
+  height: 0.5rem;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -4px;
+  background-color: #ADCCED;
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+}
+input[type="range"]:focus::-webkit-slider-thumb {
+    opacity: .5;
+}
+
+/* Custom Select Menu */
+select, ::picker(select) {
+    appearance: base-select;
+}
+select {
+    background-color: #546475;
+    border: 2px solid #6D8196;
+    padding: 5px 10px;
+    cursor: pointer
+}
+select:hover {
+    opacity: .5;
+}
+select::picker-icon {
+  color: #ADCCED;
+}
+select:open::picker-icon {
+    rotate: 180deg;
+}
+select option {
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    border: 2px solid #546475;
+    background-color: #6D8196;
+    color: #e4e6e7;
+    padding: 5px 10px;
+    outline: none;
+}
+select option:first-of-type {
+    border-radius: 10px 10px 0 0;
+}
+select option:last-of-type {
+    border-radius: 0 0 10px 10px;
+}
+::picker(select) {
+    border-radius: 10px;
+}
+select option:not(select option:last-of-type) {
+    border-bottom: none;
+}
+select option:focus {
+    background-color: #3C4854;
+}
+
 /* Remove MAP information */
 .maplibregl-ctrl-bottom-right {
+  display: none;
+}
+/* Remove Scroll Bar */
+::-webkit-scrollbar {
   display: none;
 }
